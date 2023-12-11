@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Lucro de CDB</title>
+    <style>
+        /* Estilos básicos para a página, com um esquema de cores agradável e fonte legível */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna */
+            background-color: #E0F7FA; /* Azul claro suave */
+            padding: 20px;
+            color: #333; /* Cor de texto mais suave */
+            display: flex; /* Habilita Flexbox para layout */
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+        }
+
+        /* Estilo da caixa central que contém a calculadora e a caixa de informações */
+        .container, .info-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+        }
+
+        /* Tamanho máximo para a calculadora e a caixa de informações */
+        .container {
+            max-width: 600px;
+        }
+
+        .info-box {
+            max-width: 300px;
+        }
+
+        /* Estilização dos inputs, botão e seletor */
+        input, button, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #B3E5FC;
+            font-size: 16px;
+        }
+
+        /* Estilos para o botão, incluindo um efeito de hover */
+        button {
+            background-color: #29B6F6; /* Botão em azul vibrante */
+            color: white;
+            cursor: pointer; /* Indica ação */
+        }
+
+        button:hover {
+            background-color: #039BE5; /* Escurece o botão no hover */
+        }
+
+        /* Estilo para as labels dos inputs */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Estilo para o resultado */
+        #resultado {
+            font-size: 18px;
+            color: #1565C0; /* Cor de destaque */
+            margin-top: 15px;
+        }
+
+        /* Estilo para os links e texto na caixa de informações */
+        .info-box a {
+            color: #29B6F6;
+            text-decoration: none;
+        }
+
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box p {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        // Função para calcular o lucro do CDB com base nos dados fornecidos
+        function calcularLucro() {
+            // Captura dos valores inseridos pelo usuário
+            var valorCDB = parseFloat(document.getElementById('valorCDB').value) / 100;
+            var valorInvestido = parseFloat(document.getElementById('valorInvestido').value);
+            var tempo = parseFloat(document.getElementById('tempo').value);
+            var cdi = parseFloat(document.getElementById('cdi').value) / 100;
+            var periodo = document.getElementById('periodo').value;
+
+            // Validação para garantir que todos os valores sejam válidos e positivos
+            if (isNaN(valorCDB) || isNaN(valorInvestido) || isNaN(tempo) || isNaN(cdi) || tempo <= 0) {
+                alert("Por favor, insira valores válidos e positivos.");
+                return;
+            }
+
+            // Ajusta o cálculo do ganho total com base na seleção de meses ou anos
+            var ganhoBrutoAnual = cdi * valorCDB;
+            var ganhoTotal;
+            if (periodo === 'anos') {
+                ganhoTotal = valorInvestido * (1 + ganhoBrutoAnual) ** tempo - valorInvestido;
+            } else {
+                ganhoTotal = valorInvestido * (1 + ganhoBrutoAnual / 12) ** tempo - valorInvestido;
+            }
+
+            // Exibição do resultado
+            document.getElementById('resultado').innerText = 'Lucro obtido aproximado: R$ ' + ganhoTotal.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Lucro de CDB</h2>
+
+        <label for="valorCDB">Valor do CDB em %:</label>
+        <input type="number" id="valorCDB" placeholder="120">
+
+        <label for="valorInvestido">Valor a ser investido:</label>
+        <input type="number" id="valorInvestido" placeholder="1000">
+
+        <label for="tempo">Tempo de permanência:</label>
+        <input type="number" id="tempo" placeholder="1">
+        <select id="periodo">
+            <option value="anos">Anos</option>
+            <option value="meses">Meses</option>
+        </select>
+
+        <label for="cdi">CDI atual (%) :</label>
+        <input type="number" id="cdi" placeholder="12.35">
+
+        <button onclick="calcularLucro()">Calcular Lucro</button>
+        <p id="resultado"></p>
+    </div>
+    <div class="info-box">
+        <h3>Informações Úteis</h3>
+        <p><a href="https://investidor10.com.br/indices/cdi/" target="_blank">CDI Atual</a></p>
+        <p><a href="LINK_PARA_MAIS_INFORMAÇÕES" target="_blank">Mais Informações</a></p>
+        <p><a href="https://economia.uol.com.br/financas-pessoais/noticias/redacao/2018/08/14/como-calcular-rendimento-real-de-investimento.htm#:~:text=Como%20calcular%20ganho%20de%20CDB,100)%20%3D%207%2C67%25" target="_blank">Referências de Cálculo</a></p>
+        <p>
+            <br>
+CDI atual atualizado em dezembro: 12,34%
+<br>
+<br>
+            Criadores e agradecimentos:
+            <br>
+            Juliana e Heitor.
+        </p>
+    </div>
+</body>
+</html>
