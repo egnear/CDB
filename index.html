@@ -5,45 +5,40 @@
     <style>
         /* Estilos básicos para a página, com um esquema de cores agradável e fonte legível */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte moderna */
-            background-color: #E0F7FA; /* Azul claro suave */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #E0F7FA;
+            color: #333;
             padding: 20px;
-            color: #333; /* Cor de texto mais suave */
-            display: flex; /* Habilita Flexbox para layout */
-            justify-content: center; /* Centraliza o conteúdo horizontalmente */
-            flex-direction: column; /* Organiza os elementos em coluna */
-            align-items: center; /* Centraliza os elementos verticalmente */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Estilo da caixa central que contém a calculadora e a caixa de informações */
-        .container, .info-box, .results-container {
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             margin: 10px;
-            width: 600px; /* Largura fixa para manter a consistência */
+            flex-basis: 60%;
         }
 
-        .results-container {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .result-box {
-            padding: 10px;
+        .info-box {
+            background-color: white;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             margin: 10px;
-            flex-basis: 45%;
+            flex-basis: 30%;
         }
 
-        .result-box h3 {
-            color: #1565C0;
-            margin-bottom: 10px;
-        }
-
-        /* Estilização dos inputs, botão e seletor */
         input, button, select {
             width: 100%;
             padding: 10px;
@@ -53,32 +48,28 @@
             font-size: 16px;
         }
 
-        /* Estilos para o botão, incluindo um efeito de hover */
         button {
-            background-color: #29B6F6; /* Botão em azul vibrante */
+            background-color: #29B6F6;
             color: white;
-            cursor: pointer; /* Indica ação */
+            cursor: pointer;
         }
 
         button:hover {
-            background-color: #039BE5; /* Escurece o botão no hover */
+            background-color: #039BE5;
         }
 
-        /* Estilo para as labels dos inputs */
         label {
             font-weight: bold;
             display: block;
             margin-top: 10px;
         }
 
-        /* Estilo para o resultado */
         .result-text {
             font-size: 16px;
-            color: #1565C0; /* Cor de destaque */
+            color: #1565C0;
             margin-top: 5px;
         }
 
-        /* Estilo para os links e texto na caixa de informações */
         .info-box a {
             color: #29B6F6;
             text-decoration: none;
@@ -93,7 +84,7 @@
         }
     </style>
     <script>
-  function calcularLucro() {
+        function calcularLucro() {
             var valorCDB = parseFloat(document.getElementById('valorCDB').value) / 100;
             var valorInvestido = parseFloat(document.getElementById('valorInvestido').value);
             var tempo = parseFloat(document.getElementById('tempo').value);
@@ -136,7 +127,7 @@
         function calcularImpostoRenda(tempo, periodo, ganhoTotal) {
             var aliquotaIR;
             if (periodo === 'anos') {
-                tempo *= 12; // Converte anos para meses
+                tempo *= 12;
             }
             if (tempo <= 180) {
                 aliquotaIR = 0.225;
@@ -152,59 +143,52 @@
 
         function calcularValorFuturo(valorInvestido, ganhoBrutoAnual, tempo, periodo) {
             if (periodo === 'anos') {
-                tempo *= 12; // Converte anos para meses
+                tempo *= 12;
             }
             return valorInvestido * (1 + ganhoBrutoAnual / 12) ** tempo - valorInvestido;
         }
     </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Calculadora de Lucro de CDB</h2>
-
-        <label for="valorCDB">Valor do CDB em %:</label>
-        <input type="number" id="valorCDB" placeholder="120">
-
-        <label for="valorInvestido">Valor a ser investido:</label>
-        <input type="number" id="valorInvestido" placeholder="1000">
-
-        <label for="tempo">Tempo de permanência:</label>
-        <input type="number" id="tempo" placeholder="1">
-        <select id="periodo">
-            <option value="anos">Anos</option>
-            <option value="meses">Meses</option>
-        </select>
-
-        <label for="cdi">CDI atual (%) :</label>
-        <input type="number" id="cdi" placeholder="12.35">
-
-        <button onclick="calcularLucro()">Calcular Lucro</button>
-    </div>
-
-    <div class="results-container">
-        <div class="result-box">
-            <h3>Resultado do Investimento</h3>
-            <p id="resultado" class="result-text"></p>
+    <div class="main-container">
+        <div class="info-box">
+            <h3>Informações Úteis</h3>
+            <p><a href="https://investidor10.com.br/indices/cdi/" target="_blank">CDI Atual</a></p>
+            <p><a href="LINK_PARA_MAIS_INFORMAÇÕES" target="_blank">Mais Informações</a></p>
+            <p><a href="https://economia.uol.com.br/financas-pessoais/noticias/redacao/2018/08/14/como-calcular-rendimento-real-de-investimento.htm" target="_blank">Referências de Cálculo</a></p>
+            <p>CDI atual atualizado em dezembro: 12,34%</p>
+            <p>-----------</p> 
         </div>
-        <div class="result-box">
-            <h3>Projeção para 4 Meses Adicionais</h3>
-            <p id="projecao" class="result-text"></p>
+
+        <div class="container">
+            <h2>Calculadora de Lucro de CDB</h2>
+            <!-- Elementos do formulário -->
+            <label for="valorCDB">Valor do CDB em %:</label>
+            <input type="number" id="valorCDB" placeholder="120">
+            <label for="valorInvestido">Valor a ser investido:</label>
+            <input type="number" id="valorInvestido" placeholder="1000">
+            <label for="tempo">Tempo de permanência:</label>
+            <input type="number" id="tempo" placeholder="1">
+            <select id="periodo">
+                <option value="anos">Anos</option>
+                <option value="meses">Meses</option>
+            </select>
+            <label for="cdi">CDI atual (%) :</label>
+            <input type="number" id="cdi" placeholder="12.35">
+            <button onclick="calcularLucro()">Calcular Lucro</button>
+
+            <!-- Resultados e Projeções -->
+            <div class="results-container">
+                <div class="result-box">
+                    <h3>Resultado do Investimento</h3>
+                    <p id="resultado" class="result-text"></p>
+                </div>
+                <div class="result-box">
+                    <h3>Projeção para 4 Meses Adicionais</h3>
+                    <p id="projecao" class="result-text"></p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="info-box">
-        <h3>Informações Úteis</h3>
-        <p><a href="https://investidor10.com.br/indices/cdi/" target="_blank">CDI Atual</a></p>
-        <p><a href="LINK_PARA_MAIS_INFORMAÇÕES" target="_blank">Mais Informações</a></p>
-        <p><a href="https://economia.uol.com.br/financas-pessoais/noticias/redacao/2018/08/14/como-calcular-rendimento-real-de-investimento.htm#:~:text=Como%20calcular%20ganho%20de%20CDB,100)%20%3D%207%2C67%25" target="_blank">Referências de Cálculo</a></p>
-        <p>
-            <br>
-CDI atual atualizado em dezembro: 12,34%
-<br>
-<br>
-            <br>
-
-        </p> 
     </div>
 </body>
 </html>
